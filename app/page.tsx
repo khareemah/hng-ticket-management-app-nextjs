@@ -1,102 +1,259 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { Button } from "@/components/ui";
+import { WaveHero } from "@/components/wave-hero";
+import { useAuth } from "@/lib/auth-context";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+export default function LandingPage() {
+  const { isAuthenticated } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <nav className="border-b border-border fixed w-full top-0 left-0 bg-background shadow-sm z-50">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <div className="text-2xl font-bold text-primary">TicketFlow</div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Desktop Menu */}
+          <div className="hidden sm:flex gap-4">
+            {isAuthenticated ? (
+              <Link href="/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/auth/login">
+                  <Button
+                    variant="outline"
+                    className="hover:bg-background hover:text-black cursor-pointer"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/auth/signup">
+                  <Button className="cursor-pointer">Get Started</Button>
+                </Link>
+              </>
+            )}
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="sm:hidden text-foreground focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="sm:hidden bg-white border-t border-border shadow-md">
+            <div className="flex flex-col gap-2 px-4 py-4">
+              {isAuthenticated ? (
+                <Link href="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full">Dashboard</Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button
+                      className="w-full hover:bg-background hover:text-black cursor-pointer"
+                      variant="outline"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="cursor-pointer"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Button className="w-full">Get Started</Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative py-40 md:py-20 overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
+                Manage Your Tickets Effortlessly
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8 text-pretty">
+                TicketFlow is a modern ticket management system designed to
+                streamline your workflow and boost productivity.
+              </p>
+              <div className="flex gap-4">
+                {isAuthenticated ? (
+                  <Link href="/dashboard">
+                    <Button className="cursor-pointer">
+                      {isAuthenticated ? "Dashboard" : "Get Started"}
+                    </Button>
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/auth/login">
+                      <Button
+                        variant="outline"
+                        className="hover:bg-background w-[120px] hover:text-black cursor-pointer"
+                      >
+                        Login
+                      </Button>
+                    </Link>
+                    <Link href="/auth/signup">
+                      <Button className="cursor-pointer">Get Started</Button>
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Decorative circle */}
+            <div className="relative h-96 hidden md:block">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/30 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/30 rounded-full blur-3xl"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Wave decoration */}
+        <div className="absolute bottom-0 left-0 right-0 -mb-1">
+          <WaveHero />
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-secondary/30">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
+            Why Choose TicketFlow?
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Easy to Use",
+                description:
+                  "Intuitive interface designed for teams of all sizes",
+                icon: "✓",
+              },
+              {
+                title: "Real-time Updates",
+                description:
+                  "Stay synchronized with instant ticket status changes",
+                icon: "⚡",
+              },
+              {
+                title: "Secure & Reliable",
+                description:
+                  "Your data is protected with industry-standard security",
+                icon: "🔒",
+              },
+            ].map((feature, i) => (
+              <div
+                key={i}
+                className="bg-card border border-border rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-semibold mb-2 text-card-foreground">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold mb-6 text-foreground">
+            Ready to Get Started?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Join thousands of teams using TicketFlow to manage their tickets
+            efficiently.
+          </p>
+          <Link href={isAuthenticated ? "/dashboard" : "/auth/signup"}>
+            <Button size="lg">Start Free Today</Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-secondary/20 py-12">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4 text-foreground">
+                TicketFlow
+              </h3>
+              <p className="text-muted-foreground">
+                Modern ticket management for teams
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4 text-foreground">Product</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <Link href="#" className="hover:text-foreground transition">
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-foreground transition">
+                    Pricing
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4 text-foreground">Company</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <Link href="#" className="hover:text-foreground transition">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-foreground transition">
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4 text-foreground">Legal</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <Link href="#" className="hover:text-foreground transition">
+                    Privacy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-foreground transition">
+                    Terms
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-border pt-8 text-center text-muted-foreground">
+            <p>&copy; 2025 TicketFlow. All rights reserved.</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
