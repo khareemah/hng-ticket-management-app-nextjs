@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui";
 import { WaveHero } from "@/components/wave-hero";
 import { useAuth } from "@/lib/auth-context";
 import { useState } from "react";
@@ -41,45 +47,49 @@ export default function LandingPage() {
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="sm:hidden text-foreground focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Dropdown Menu */}
-        {isMenuOpen && (
-          <div className="sm:hidden bg-white border-t border-border shadow-md">
-            <div className="flex flex-col gap-2 px-4 py-4">
-              {isAuthenticated ? (
-                <Link href="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full">Dashboard</Button>
-                </Link>
-              ) : (
-                <>
-                  <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
-                    <Button
-                      className="w-full hover:bg-background hover:text-black cursor-pointer"
-                      variant="outline"
+          {/* Mobile dropdown */}
+          <div className="sm:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="outline">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  {isAuthenticated ? (
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setIsMenuOpen(false)}
                     >
-                      Login
-                    </Button>
-                  </Link>
-                  <Link
-                    href="/auth/signup"
-                    className="cursor-pointer"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Button className="w-full">Get Started</Button>
-                  </Link>
-                </>
-              )}
-            </div>
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/auth/login"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Login
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/auth/signup"
+                          className="cursor-pointer"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Get Started
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-        )}
+        </div>
       </nav>
 
       {/* Hero Section */}

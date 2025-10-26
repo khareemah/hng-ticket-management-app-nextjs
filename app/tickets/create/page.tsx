@@ -8,8 +8,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Menu, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  Input,
+} from "@/components/ui";
 import { ProtectedRoute } from "@/components/protected-route";
 import { useAuth } from "@/lib/auth-context";
 import { createTicket, Ticket } from "@/lib/ticket-store";
@@ -71,7 +77,7 @@ function CreateTicketContent() {
             Create Ticket
           </h1>
 
-          {/* Desktop Buttons */}
+          {/* Desktop buttons */}
           <div className="hidden sm:flex gap-3">
             <Link href="/tickets">
               <Button variant="outline">Back</Button>
@@ -81,20 +87,21 @@ function CreateTicketContent() {
             </Button>
           </div>
 
-          {/* Mobile Dropdown Toggle */}
+          {/* Mobile dropdown */}
           <div className="sm:hidden">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setMenuOpen((prev) => !prev)}
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="outline">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href="/tickets">Back</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 

@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui";
 import { ProtectedRoute } from "@/components/protected-route";
 import { useAuth } from "@/lib/auth-context";
 import { getTickets, deleteTicket, type Ticket } from "@/lib/ticket-store";
-import { useToast } from "@/components/toast";
 import { toast } from "sonner";
 import { Loader2, Menu, X } from "lucide-react";
 
@@ -78,58 +83,40 @@ function TicketsContent() {
             </p>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden sm:flex gap-2 sm:gap-4">
+          <div className="hidden sm:flex gap-3">
             <Link href="/tickets/create">
-              <Button>Create Ticket</Button>
+              <Button className="w-full">Create Ticket</Button>
             </Link>
+
             <Link href="/dashboard">
-              <Button variant="outline">Dashboard</Button>
+              <Button className="w-full" variant="outline">
+                Dashboard
+              </Button>
             </Link>
-            <Button
-              variant="outline"
-              onClick={logout}
-              aria-label="Logout from your account"
-            >
+            <Button variant="outline" onClick={logout}>
               Logout
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="sm:hidden text-foreground focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Dropdown */}
-        {isMenuOpen && (
-          <div className="sm:hidden bg-white border-t border-border shadow-md">
-            <div className="flex flex-col gap-2 px-4 py-4">
-              <Link href="/tickets/create" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full">Create Ticket</Button>
-              </Link>
-              <Link href="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full" variant="outline">
-                  Dashboard
+          <div className="sm:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="outline">
+                  <Menu className="w-5 h-5" />
                 </Button>
-              </Link>
-              <Button
-                className="w-full"
-                variant="outline"
-                onClick={() => {
-                  logout();
-                  setIsMenuOpen(false);
-                }}
-              >
-                Logout
-              </Button>
-            </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                  <Link href="/tickets/create">Create Ticket</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-        )}
+        </div>
       </header>
 
       {/* Main Content */}
