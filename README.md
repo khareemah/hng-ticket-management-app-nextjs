@@ -1,54 +1,86 @@
-# 🎟️ Ticket Management Dashboard
+# 🎫 Ticket Management App – Next.js
 
-A modern, responsive **ticket tracking dashboard** built with **Next.js**, **React**, **TypeScript**, **Tailwind CSS**, and **React Hook Form**.  
-This project allows users to create, view, and manage support tickets with a clean UI and secure authentication.
+A responsive ticket management web app built with **Next.js**, **Tailwind CSS**, and **shadcn/ui**, using **localStorage** for data persistence.  
+Developed as part of the **HNG Stage 2** task.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 **Authentication System**
-
-  - Secure login and logout functionality.
-  - Protected routes with session-based access.
-  - Automatic redirect of unauthorized users to the login page.
-
-- 🧾 **Ticket Management**
-
-  - Create, read, update, and delete tickets (CRUD).
-  - Organized by status — _Open_, _In Progress_, _Closed_.
-  - Status-based color indicators (Green, Amber, Gray tones).
-
-- 📊 **Dashboard Overview**
-
-  - Summary cards showing ticket statistics.
-  - Quick actions for creating and viewing tickets.
-  - Animated loading states and smooth transitions.
-
-- 💡 **UI & UX**
-  - Fully responsive design with Tailwind CSS.
-  - Fixed header with dropdown menu for small screens.
-  - Decorative background accents for a modern look.
+- 🧾 Create, view, update, and delete tickets
+- 💾 Data persistence via **localStorage** (no backend required)
+- 🎨 Modern and responsive UI built with **Tailwind CSS** and **shadcn/ui**
+- ⚡ Fast performance powered by **Next.js** and **pnpm**
+- 🌗 Light and dark mode support
+- 📱 Fully responsive design for mobile and desktop
 
 ---
 
 ## 🛠️ Tech Stack
 
-- [Next.js](https://nextjs.org/)
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [React Hook Form](https://react-hook-form.com/)
-- [ShadCN UI Components](https://ui.shadcn.com/)
-- [Lucide Icons](https://lucide.dev/)
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **State Management:** localStorage
+- **Package Manager:** pnpm
+- **Deployment:** Netlify
 
 ---
 
-## ⚙️ Installation and Setup
+## 📦 Installation & Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/kareemah/ticket-dashboard.git
-cd ticket-dashboard
+git clone https://github.com/<your-username>/<your-repo-name>.git
+cd <your-repo-name>
 ```
+
+### 2. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 3. Run the development server
+
+```bash
+pnpm run dev
+```
+
+Visit the app at 👉 **http://localhost:3000**
+
+---
+
+## 🌐 Deployment (Netlify)
+
+To deploy on **Netlify**:
+
+1. Push your project to GitHub.
+2. Go to [Netlify](https://app.netlify.com/).
+3. Click **New site from Git**, select your repo, and follow the prompts.
+4. Set the build command to:
+
+   ```bash
+   pnpm run build
+   ```
+
+   and the publish directory to:
+
+   ```bash
+   .next
+   ```
+
+---
+
+## 🧑‍💻 Author
+
+**Kareemah Ajimobi**  
+Stage 2 – HNG Internship 13  
+Built with ❤️ using Next.js and Tailwind CSS.
+
+---
+
+## 🪪 License
+
+This project is open source and available under the [MIT License](LICENSE).
