@@ -79,7 +79,7 @@ function EditTicketContent() {
   return (
     <div className="min-h-screen bg-background">
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-backdrop-filter:bg-card/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-card-foreground">
             Edit Ticket
           </h1>
@@ -239,7 +239,7 @@ function EditTicketContent() {
 
       {/* ✅ Footer */}
       <footer className="border-t border-border bg-secondary/20 py-8 sm:py-12 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted-foreground text-sm">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center text-muted-foreground text-sm">
           <p>&copy; 2025 TicketFlow. All rights reserved.</p>
         </div>
       </footer>
