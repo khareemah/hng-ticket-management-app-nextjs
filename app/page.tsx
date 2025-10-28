@@ -10,12 +10,10 @@ import {
 } from "@/components/ui";
 import { WaveHero } from "@/components/wave-hero";
 import { useAuth } from "@/lib/auth-context";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -58,28 +56,14 @@ export default function LandingPage() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
                   {isAuthenticated ? (
-                    <Link
-                      href="/dashboard"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
+                    <Link href="/dashboard">Dashboard</Link>
                   ) : (
                     <>
                       <DropdownMenuItem>
-                        <Link
-                          href="/auth/login"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          Login
-                        </Link>
+                        <Link href="/auth/login">Login</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <Link
-                          href="/auth/signup"
-                          className="cursor-pointer"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
+                        <Link href="/auth/signup" className="cursor-pointer">
                           Get Started
                         </Link>
                       </DropdownMenuItem>

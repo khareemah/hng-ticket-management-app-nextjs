@@ -9,7 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProtectedRoute } from "@/components/protected-route";
 import { useAuth } from "@/lib/auth-context";
-import { getTickets, updateTicket, type Ticket } from "@/lib/ticket-store";
+import { getTickets, updateTicket } from "@/lib/ticket-store";
 import { toast } from "sonner";
 import {
   DropdownMenu,

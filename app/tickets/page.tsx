@@ -13,7 +13,7 @@ import { ProtectedRoute } from "@/components/protected-route";
 import { useAuth } from "@/lib/auth-context";
 import { getTickets, deleteTicket, type Ticket } from "@/lib/ticket-store";
 import { toast } from "sonner";
-import { Loader2, Menu, X } from "lucide-react";
+import { Loader2, Menu } from "lucide-react";
 
 function TicketsContent() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -23,7 +23,6 @@ function TicketsContent() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const { logout } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setTickets(getTickets());
