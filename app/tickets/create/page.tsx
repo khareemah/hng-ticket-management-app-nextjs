@@ -28,10 +28,19 @@ const ticketSchema = z.object({
     .max(100, "Title must not exceed 100 characters"),
   description: z
     .string()
-    .min(3, "Description must be at least 3 characters long")
-    .max(1000, "Description too long"),
-  status: z.enum(["open", "in_progress", "closed"]),
-  priority: z.enum(["low", "medium", "high"]),
+    .trim()
+    .optional()
+    .refine(
+      (val) => !val || val.length >= 3,
+      "Description must be at least 3 characters"
+    )
+    .refine(
+      (val) => !val || val.length <= 1000,
+      "Description must not exceed 1000 characters"
+    ),
+
+  status: z.string().nonempty("Status is required"),
+  priority: z.string().optional(),
 });
 
 type TicketFormData = z.infer<typeof ticketSchema>;
@@ -50,8 +59,8 @@ function CreateTicketContent() {
     defaultValues: {
       title: "",
       description: "",
-      status: "open",
-      priority: "low",
+      status: "",
+      priority: "",
     },
   });
 
@@ -186,7 +195,7 @@ function CreateTicketContent() {
                   htmlFor="status"
                   className="block text-sm font-medium text-card-foreground mb-2"
                 >
-                  Status
+                  Status <span className="text-destructive">*</span>
                 </label>
                 <select
                   id="status"
@@ -195,6 +204,9 @@ function CreateTicketContent() {
                     errors.status ? "border-red-500" : "border-border"
                   }`}
                 >
+                  <option value="" disabled>
+                    Select an option
+                  </option>
                   <option value="open">Open</option>
                   <option value="in_progress">In Progress</option>
                   <option value="closed">Closed</option>
@@ -221,6 +233,9 @@ function CreateTicketContent() {
                     errors.priority ? "border-red-500" : "border-border"
                   }`}
                 >
+                  <option value="" disabled>
+                    Select an option
+                  </option>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>

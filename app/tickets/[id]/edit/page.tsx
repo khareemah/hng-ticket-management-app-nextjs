@@ -24,14 +24,23 @@ import { Loader2, Menu } from "lucide-react";
 const ticketSchema = z.object({
   title: z
     .string()
-    .min(3, "Title must be at least 3 characters long")
+    .min(3, "Title must be at least 3 characters")
     .max(100, "Title must not exceed 100 characters"),
   description: z
     .string()
-    .min(3, "Description must be at least 3 characters long")
-    .max(1000, "Description too long"),
-  status: z.enum(["open", "in_progress", "closed"]),
-  priority: z.enum(["low", "medium", "high"]),
+    .trim()
+    .optional()
+    .refine(
+      (val) => !val || val.length >= 3,
+      "Description must be at least 3 characters"
+    )
+    .refine(
+      (val) => !val || val.length <= 1000,
+      "Description must not exceed 1000 characters"
+    ),
+
+  status: z.string().nonempty("Status is required"),
+  priority: z.string().optional(),
 });
 
 type TicketFormData = z.infer<typeof ticketSchema>;
@@ -52,8 +61,8 @@ function EditTicketContent() {
     defaultValues: {
       title: "",
       description: "",
-      status: "open",
-      priority: "low",
+      status: "",
+      priority: "",
     },
   });
 
@@ -156,7 +165,7 @@ function EditTicketContent() {
                 }`}
               />
               {errors.description && (
-                <p className="text-red-60 text-sm mt-1">
+                <p className="text-red-600 text-sm mt-1">
                   {errors.description.message}
                 </p>
               )}
@@ -178,6 +187,9 @@ function EditTicketContent() {
                     errors.status ? "border-red-500" : "border-border"
                   }`}
                 >
+                  <option value="" disabled>
+                    Select an option
+                  </option>
                   <option value="open">Open</option>
                   <option value="in_progress">In Progress</option>
                   <option value="closed">Closed</option>
@@ -203,6 +215,9 @@ function EditTicketContent() {
                     errors.priority ? "border-red-500" : "border-border"
                   }`}
                 >
+                  <option value="" disabled>
+                    Select an option
+                  </option>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>

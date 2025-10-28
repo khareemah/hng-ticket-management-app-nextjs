@@ -3,6 +3,8 @@
 A responsive ticket management web app built with **Next.js**, **Tailwind CSS**, and **shadcn/ui**, using **localStorage** for data persistence.  
 Developed as part of the **HNG Stage 2** task.
 
+🌐 **Live Demo:** [https://hng-ticket-management-app-nextjs.netlify.app](https://hng-ticket-management-app-nextjs.netlify.app)
+
 ---
 
 ## 🚀 Features
@@ -18,7 +20,7 @@ Developed as part of the **HNG Stage 2** task.
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 15 (App Router)
 - **Styling:** Tailwind CSS
 - **UI Components:** shadcn/ui
 - **State Management:** localStorage
