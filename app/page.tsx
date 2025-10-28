@@ -77,9 +77,10 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-40 md:py-20 overflow-hidden">
+      <section className="relative py-40 md:py-20 overflow-hidden bg-background">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left content */}
             <div>
               <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
                 Manage Your Tickets Effortlessly
@@ -88,16 +89,17 @@ export default function LandingPage() {
                 TicketFlow is a modern ticket management system designed to
                 streamline your workflow and boost productivity.
               </p>
+
               <div className="flex gap-4">
                 {isAuthenticated ? (
-                  <Link href="/dashboard">
+                  <Link href="/dashboard" className="relative z-10">
                     <Button className="cursor-pointer">
                       {isAuthenticated ? "Dashboard" : "Get Started"}
                     </Button>
                   </Link>
                 ) : (
                   <>
-                    <Link href="/auth/login">
+                    <Link href="/auth/login" className="relative z-10">
                       <Button
                         variant="outline"
                         className="hover:bg-background w-[120px] hover:text-black cursor-pointer"
@@ -105,25 +107,69 @@ export default function LandingPage() {
                         Login
                       </Button>
                     </Link>
-                    <Link href="/auth/signup">
+                    <Link href="/auth/signup" className="relative z-10">
                       <Button className="cursor-pointer">Get Started</Button>
                     </Link>
                   </>
-                )}
+                )}{" "}
               </div>
             </div>
 
-            {/* Decorative circle */}
+            {/* Decorative blur circles */}
             <div className="relative h-96 hidden md:block">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/30 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/30 rounded-full blur-3xl"></div>
+              <div
+                className="absolute top-0 right-0 w-72 h-72 rounded-full blur-3xl"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #3B82F6aa, #60A5FA66, transparent)",
+                }}
+              ></div>
+
+              <div
+                className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl"
+                style={{
+                  background:
+                    "linear-gradient(45deg, #60A5FA55, #3B82F633, transparent)",
+                }}
+              ></div>
+
+              <div
+                className="absolute inset-0 m-auto w-40 h-40 rounded-full blur-2xl"
+                style={{ backgroundColor: "#3B82F622" }}
+              ></div>
             </div>
           </div>
         </div>
 
-        {/* Wave decoration */}
+        {/* Layered Blue Wave Background */}
         <div className="absolute bottom-0 left-0 right-0 -mb-1">
-          <WaveHero />
+          <svg
+            className="w-full h-auto"
+            viewBox="0 0 1440 200"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* First wave */}
+            <path
+              d="M0,160 Q360,120 720,160 T1440,160 L1440,200 L0,200 Z"
+              fill="url(#blueWave1)"
+            />
+            {/* Second wave */}
+            <path
+              d="M0,180 Q360,140 720,180 T1440,180 L1440,200 L0,200 Z"
+              fill="url(#blueWave2)"
+            />
+            <defs>
+              <linearGradient id="blueWave1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#60A5FA" stopOpacity="0.15" />
+              </linearGradient>
+              <linearGradient id="blueWave2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.1" />
+                <stop offset="100%" stopColor="#60A5FA" stopOpacity="0.1" />
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
       </section>
 
