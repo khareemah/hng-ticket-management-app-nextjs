@@ -1,12 +1,9 @@
 import type React from "react";
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui";
-
-// const _geist = Geist({ subsets: ["latin"] });
-// const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "TicketFlow - Ticket Management System",
@@ -14,13 +11,20 @@ export const metadata: Metadata = {
   generator: "v0.app",
 };
 
+// Load fonts
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body className={`font-sans antialiased`}>
         <AuthProvider>
           {children}
