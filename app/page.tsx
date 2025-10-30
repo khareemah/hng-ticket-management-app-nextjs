@@ -116,7 +116,7 @@ export default function LandingPage() {
             </div>
 
             {/* Decorative blur circles */}
-            <div className="relative h-96 hidden md:block">
+            <div className="relative h-96 block">
               <div
                 className="absolute top-0 right-0 w-72 h-72 rounded-full blur-3xl"
                 style={{
